@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class SimulacionCarrera : MonoBehaviour
 {
-    float posEnZCoche = 0f, valorLeanTween = 0f;
+    float posEnZCoche = 0f, valorLeanTween = 0f, prevPosEnZ;
     public float nuevaPosEnZ, tiempoDeDesplazamiento;
     bool desplazando = false;
     Rigidbody rb;
     
     void Start()
     {
-        
+        prevPosEnZ = posEnZCoche; 
     }
 
     // Update is called once per frame
@@ -29,11 +29,13 @@ public class SimulacionCarrera : MonoBehaviour
                 desplazando = false;
             });
         }
+
+        prevPosEnZ = posEnZCoche;
     }
     private void FixedUpdate () {
         if (LeanTween.isTweening(gameObject) == true) {
             //gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, posEnZCoche);
-            rb.MovePosition(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, posEnZCoche));
+            rb.MovePosition(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, posEnZCoche - prevPosEnZ));
         }
     }
 

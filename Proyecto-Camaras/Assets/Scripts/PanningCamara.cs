@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PanningCamara : MonoBehaviour
 {
-    float rotacionCamara = 0f;
+    float rotacionCamara = 0f, diferencia;
     public KeyCode rotarDerecha, rotarIzquierda;
     public GameObject cocheAmarillo;
+    public Slider sliderPaneo;
+    public float velocidadPaneo;
+
+    private void Awake () {
+        velocidadPaneo = sliderPaneo.value;
+    }
     void Start()
     {
         
@@ -15,23 +22,30 @@ public class PanningCamara : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rotacionCamara > -50f && rotacionCamara < 50f) {
-            if (Input.GetKey(rotarDerecha)) {
-                rotacionCamara += Time.deltaTime * 45f;
-            } else if (Input.GetKey(rotarIzquierda)) {
-                rotacionCamara -= Time.deltaTime * 45f;
-            }
+        if (Input.GetKey(rotarDerecha) && rotacionCamara < 60f) {
+            diferencia = Mathf.DeltaAngle(rotacionCamara, 60f);
+            rotacionCamara += Time.deltaTime * diferencia * velocidadPaneo;
+
+        } else if (Input.GetKey(rotarIzquierda) && rotacionCamara > -60f) {
+            diferencia = Mathf.DeltaAngle(rotacionCamara, -60f);
+            rotacionCamara += Time.deltaTime * diferencia * velocidadPaneo;
+
+        } else if (!Input.GetKey(rotarDerecha) && !Input.GetKey(rotarIzquierda)) {
+            diferencia = Mathf.DeltaAngle(rotacionCamara, 0f);
+            rotacionCamara += Time.deltaTime * 5f * diferencia;
         }
 
-        if (!Input.GetKey(rotarDerecha) && !Input.GetKey(rotarIzquierda)) {
-            if (rotacionCamara > 0) {
-                rotacionCamara -= Time.deltaTime * 80f;
-            } else if (rotacionCamara < 0) {
-                rotacionCamara += Time.deltaTime * 80f;
-            }
-        }
+        gameObject.transform.rotation = Quaternion.Euler(15f, rotacionCamara, gameObject.transform.rotation.z);
+        gameObject.transform.position = new Vector3(cocheAmarillo.transform.position.x, LerpDePosiciones (cocheAmarillo.transform.position.y) + 1.9f, LerpDePosiciones (cocheAmarillo.transform.position.z)-.5f);
+    }
 
-        gameObject.transform.rotation = Quaternion.Euler(gameObject.transform.rotation.x, rotacionCamara, gameObject.transform.rotation.z);
-        gameObject.transform.position = new Vector3(cocheAmarillo.transform.position.x, cocheAmarillo.transform.position.y + 1.95f, cocheAmarillo.transform.position.z);
+    public void CambioVelocidadPaneo () {
+        velocidadPaneo = sliderPaneo.value;
+    }
+
+    public float LerpDePosiciones (float posicionDelObjeto) {
+        float x;
+        x = Mathf.Lerp(posicionDelObjeto, Mathf.Round(posicionDelObjeto), Time.deltaTime);
+        return x;
     }
 }
