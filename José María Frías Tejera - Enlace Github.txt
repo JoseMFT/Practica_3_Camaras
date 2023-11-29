@@ -1,0 +1,20 @@
+Enlace al github:
+https://github.com/JoseMFT/Practica_3_Camaras
+
+Dentro del proyecto de unity (Proyecto-Camaras) dentro de la carpeta Practica_3_Camaras se encuentran 4 escenas:
+- Travelling
+- Panning
+- Vertigo
+
+Todas de ellas son interactivas menos la de Vertigo:
+
+- En travelling podrás controlar al personaje (con W,A,S,D) y mover la cámara con el ratón. El efecto de travelling se podrá
+activar al pulsar la tecla 'T'.
+
+- En panning podrás ajustar la velocidad del paneo con el slider de la parte superior de la pantalla. Podrás girar la cámara
+hacia la izquierda pulsando la tecla 'Q' y girarla hacia la derecha pulsando la tecla 'E'. La cámara volverá automáticamente 
+a su posición original al soltar la tecla que se encuentre controlando el movimiento.
+
+- En vértigo acutará un script en el que la cámara realizará el efecto de forma constante (acercándose y alejándose repetititvamente)
+
+La escena que reune todos los efectos se encuentra vacía y no es válida para la entrega.

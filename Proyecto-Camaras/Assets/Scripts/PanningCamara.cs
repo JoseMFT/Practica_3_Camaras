@@ -22,12 +22,12 @@ public class PanningCamara : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(rotarDerecha) && rotacionCamara < 60f) {
-            diferencia = Mathf.DeltaAngle(rotacionCamara, 60f);
+        if (Input.GetKey(rotarDerecha) && rotacionCamara < 75f) {
+            diferencia = Mathf.DeltaAngle(rotacionCamara, 75f);
             rotacionCamara += Time.deltaTime * diferencia * velocidadPaneo;
 
-        } else if (Input.GetKey(rotarIzquierda) && rotacionCamara > -60f) {
-            diferencia = Mathf.DeltaAngle(rotacionCamara, -60f);
+        } else if (Input.GetKey(rotarIzquierda) && rotacionCamara > -75f) {
+            diferencia = Mathf.DeltaAngle(rotacionCamara, -75f);
             rotacionCamara += Time.deltaTime * diferencia * velocidadPaneo;
 
         } else if (!Input.GetKey(rotarDerecha) && !Input.GetKey(rotarIzquierda)) {
@@ -35,17 +35,17 @@ public class PanningCamara : MonoBehaviour
             rotacionCamara += Time.deltaTime * 5f * diferencia;
         }
 
-        gameObject.transform.rotation = Quaternion.Euler(15f, rotacionCamara, gameObject.transform.rotation.z);
-        gameObject.transform.position = new Vector3(cocheAmarillo.transform.position.x, LerpDePosiciones (cocheAmarillo.transform.position.y) + 1.9f, LerpDePosiciones (cocheAmarillo.transform.position.z)-.5f);
+        gameObject.transform.rotation = Quaternion.Euler(15f, rotacionCamara + 90f, gameObject.transform.rotation.z);
+        gameObject.transform.position = new Vector3(cocheAmarillo.transform.position.x - .45f, cocheAmarillo.transform.position.y + 1.95f, cocheAmarillo.transform.position.z);
     }
 
     public void CambioVelocidadPaneo () {
         velocidadPaneo = sliderPaneo.value;
     }
 
-    public float LerpDePosiciones (float posicionDelObjeto) {
+    /*public float LerpDePosiciones (float posicionDelObjeto) {
         float x;
         x = Mathf.Lerp(posicionDelObjeto, Mathf.Round(posicionDelObjeto), Time.deltaTime);
         return x;
-    }
+    }*/
 }

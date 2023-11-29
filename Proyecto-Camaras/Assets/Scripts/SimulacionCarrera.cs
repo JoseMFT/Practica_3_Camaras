@@ -4,42 +4,35 @@ using UnityEngine;
 
 public class SimulacionCarrera : MonoBehaviour
 {
-    float posEnZCoche = 0f, valorLeanTween = 0f, prevPosEnZ;
-    public float nuevaPosEnZ, tiempoDeDesplazamiento;
+    float valorLeanTween = 0f, posDespuesDesplazamiento = 0f;
+    public float nuevaPos, tiempoDeDesplazamiento, desplazamientoCoche;
     bool desplazando = false;
-    Rigidbody rb;
     
     void Start()
     {
-        prevPosEnZ = posEnZCoche; 
+       LeanTween.value (valorLeanTween, desplazamientoCoche, desplazamientoCoche * 1.5f).setEaseInOutCubic().setLoopPingPong().setOnUpdate((x)=> {
+           gameObject.transform.position = new Vector3(0f + x, gameObject.transform.position.y, gameObject.transform.position.z);
+       }).setOnComplete(()=> {
+           valorLeanTween = 0f;
+       });
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (desplazando == false) {
+        /*if (desplazando == false) {
             desplazando = true;
-            nuevaPosEnZ = Random.Range(-5f, 5f);
-            tiempoDeDesplazamiento = nuevaPosEnZ * 1.5f;
+            nuevaPos = Random.Range(-5f, 5f);
+            tiempoDeDesplazamiento = nuevaPos * 1.5f;
 
-            LeanTween.value(valorLeanTween, nuevaPosEnZ, tiempoDeDesplazamiento).setEaseInOutCubic().setOnUpdate((x) => {
-                posEnZCoche = x;
+            LeanTween.value(valorLeanTween, nuevaPos, tiempoDeDesplazamiento).setEaseInOutCubic().setOnUpdate((x) => {
+                gameObject.transform.position = new Vector3(posDespuesDesplazamiento + x, gameObject.transform.position.y, gameObject.transform.position.z);
             }).setOnComplete(()=> {
+                posDespuesDesplazamiento = gameObject.transform.position.x;
                 valorLeanTween = 0f;
                 desplazando = false;
             });
-        }
-
-        prevPosEnZ = posEnZCoche;
-    }
-    private void FixedUpdate () {
-        if (LeanTween.isTweening(gameObject) == true) {
-            //gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, posEnZCoche);
-            rb.MovePosition(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, posEnZCoche - prevPosEnZ));
-        }
+        }*/
     }
 
-    public void MovimientoCoches (float movimientoEnZDelCoche) {
-
-    }
 }
